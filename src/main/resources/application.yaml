@@ -1,0 +1,95 @@
+quarkus:
+  quaxrtz:
+    force-start: true
+  http:
+    port: 8081
+
+#bitmex profile
+"%bitmex":
+  websocket:
+    source:
+      name: bitmex
+      url: wss://www.bitmex.com/realtime?subscribe=quote:XBTUSD
+  kafka:
+    topic-name: bitmex-data-feed
+    acks: all
+    retries: 0
+    bootstrap:
+      servers: localhost:9092
+    key:
+      serializer: org.apache.kafka.common.serialization.StringSerializer
+    value:
+      serializer: org.apache.kafka.common.serialization.StringSerializer
+
+#binance profile
+"%binance":
+  websocket:
+    source:
+      name: binance
+      url: wss://fstream.binance.com/stream?streams=btcusdt@bookTicker
+      message:
+  kafka:
+    topic-name: binance-data-feed
+    acks: all
+    retries: 0
+    bootstrap:
+      servers: localhost:9092
+    key:
+      serializer: org.apache.kafka.common.serialization.StringSerializer
+    value:
+      serializer: org.apache.kafka.common.serialization.StringSerializer
+
+#bitstamp profile
+"%bitstamp":
+  websocket:
+    source:
+      name: bitstamp
+      url: wss://ws.bitstamp.net
+      message: '{"data":{"channel":"order_book_btcusd"},"event":"bts:subscribe"}'
+  kafka:
+    topic-name: bitstamp-data-feed
+    acks: all
+    retries: 0
+    bootstrap:
+      servers: localhost:9092
+    key:
+      serializer: org.apache.kafka.common.serialization.StringSerializer
+    value:
+      serializer: org.apache.kafka.common.serialization.StringSerializer
+
+#coinbase profile
+"%coinbase":
+  websocket:
+    source:
+      name: coinbase
+      url:  wss://ws-feed.pro.coinbase.com
+      message: '{"type": "subscribe", "product_ids": ["ETH-USD","ETH-EUR"],"channels": ["level2","heartbeat",{"name": "ticker", "product_ids": ["ETH-BTC","ETH-USD"]}]}'
+  kafka:
+    topic-name: coinbase-data-feed
+    acks: all
+    retries: 0
+    bootstrap:
+      servers: localhost:9092
+    key:
+      serializer: org.apache.kafka.common.serialization.StringSerializer
+    value:
+      serializer: org.apache.kafka.common.serialization.StringSerializer
+
+#kraken profile
+"%kraken":
+  websocket:
+    source:
+      name: kraken
+      url:  wss://futures.kraken.com/ws/v1
+      message: '{"event":"subscribe", "feed":"ticker", "product_ids": ["PI_XBTUSD"]}'
+  kafka:
+    topic-name: kraken-data-feed
+    acks: all
+    retries: 0
+    bootstrap:
+      servers: localhost:9092
+    key:
+      serializer: org.apache.kafka.common.serialization.StringSerializer
+    value:
+      serializer: org.apache.kafka.common.serialization.StringSerializer
+
